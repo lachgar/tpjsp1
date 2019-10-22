@@ -9,12 +9,13 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script src="script/script.js" type="text/javascript"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <link href="style/css.css" rel="stylesheet" type="text/css"/>
         <link href="style/csslocal.css" rel="stylesheet" type="text/css"/>
+        <script src="script/jquery-3.3.1.min.js" type="text/javascript"></script>
         <script src="script/machineByMarque.js" type="text/javascript"></script>
+
     </head>
     <body>
         <%@include file="template/header.jsp" %>
@@ -24,22 +25,22 @@
                 <fieldset>
                     <legend>Selectionner Marque</legend>
                     <table border="0">
-                        
+
                         <tr>
                             <td>Marque</td>
                             <td>
                                 <select id="marque" name="marque">
                                     <%
                                         MarqueService ms = new MarqueService();
-                                        for(Marque m : ms.findAll()){
+                                        for (Marque m : ms.findAll()) {
                                     %>
                                     <option value="<%=m.getId()%>"><%=m.getLibelle()%></option>
                                     <%}%>
                                 </select>
                             </td>
                         </tr>
-                        
-                        
+
+
                     </table>
                 </fieldset>
             </form>
@@ -58,7 +59,7 @@
                             <th>Prix</th>
                             <th>Marque</th>
                             <th>Date d'achat</th>
-                       
+
                             <th>Supprimer</th>
                             <th>Modifier</th>
                         </tr>

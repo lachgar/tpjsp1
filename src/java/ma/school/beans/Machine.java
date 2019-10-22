@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 
 /**
@@ -18,6 +20,10 @@ import javax.persistence.Temporal;
  * @author a
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "findByMarque", query = "From Machine where marque=:marque"),
+    @NamedQuery(name = "findBetweenDate", query = "From Machine where dateAchat between :d1 and :d2")   
+})
 public class Machine implements Serializable{
     @Id
     @GeneratedValue
@@ -74,11 +80,9 @@ public class Machine implements Serializable{
     public Marque getMarque() {
         return marque;
     }
-
+    
     public void setMarque(Marque marque) {
         this.marque = marque;
     }
-    
-    
     
 }

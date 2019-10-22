@@ -24,8 +24,7 @@ public class Marque {
     private String code;
     private String libelle;
 
-    @OneToMany(mappedBy = "marque", fetch = FetchType.EAGER)
-    private List<Machine> machines;
+ 
     
     public Marque(String code, String libelle) {
         this.code = code;
@@ -48,13 +47,6 @@ public class Marque {
         return code;
     }
 
-    public List<Machine> getMachines() {
-        return machines;
-    }
-
-    public void setMachines(List<Machine> machines) {
-        this.machines = machines;
-    }
 
     public void setCode(String code) {
         this.code = code;

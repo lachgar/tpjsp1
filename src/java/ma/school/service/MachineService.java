@@ -7,6 +7,7 @@ package ma.school.service;
 
 import java.util.List;
 import ma.school.beans.Machine;
+import ma.school.beans.Marque;
 import ma.school.dao.IDao;
 import ma.school.util.HibernateUtil;
 import org.hibernate.Session;
@@ -65,4 +66,17 @@ public class MachineService implements IDao<Machine>{
         return e;
     }
     
+    
+    public List<Machine> findByMarque(Marque marque) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.getTransaction().begin();
+        List<Machine> etds = session.getNamedQuery("findByMarque").setParameter("marque", marque).list();
+        session.getTransaction().commit();
+        session.close();
+        return etds;
+
+    }
+    
 }
+
+

@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import ma.school.beans.Machine;
+import ma.school.service.MachineService;
 import ma.school.service.MarqueService;
 
 /**
@@ -35,11 +36,12 @@ public class MachineByMarqueController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     MarqueService ms = new MarqueService();
+    MachineService mms = new MachineService();
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("application/json;charset=UTF-8");
        
-        List<Machine> l = ms.findById(5).getMachines();
+        List<Machine> l = mms.findByMarque(ms.findById(5));
         
         String s = new Gson().toJson(l);
         response.getWriter().write(s);

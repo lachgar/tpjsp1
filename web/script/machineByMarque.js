@@ -1,6 +1,6 @@
 
 function charger(){
-    console.log(document.getElementById("marque").value);
+    console.log($('#marque').val);
 }
 function load(){
     document.getElementById("marque").addEventListener('change', charger);
