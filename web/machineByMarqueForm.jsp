@@ -30,6 +30,7 @@
                             <td>Marque</td>
                             <td>
                                 <select id="marque" name="marque">
+                                    <option value="0">Choisir une marque</option>
                                     <%
                                         MarqueService ms = new MarqueService();
                                         for (Marque m : ms.findAll()) {
