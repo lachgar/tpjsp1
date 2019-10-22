@@ -39,9 +39,11 @@ public class MachineByMarqueController extends HttpServlet {
     MachineService mms = new MachineService();
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("m"));
+        System.out.println("id = "+id);
         response.setContentType("application/json;charset=UTF-8");
        
-        List<Machine> l = mms.findByMarque(ms.findById(5));
+        List<Machine> l = mms.findByMarque(ms.findById(id));
         
         String s = new Gson().toJson(l);
         response.getWriter().write(s);

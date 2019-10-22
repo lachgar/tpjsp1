@@ -64,20 +64,9 @@
                             <th>Modifier</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <%
-                            for (Machine mm : mms.findAll()) {
-                        %>
-                        <tr>
-                            <td><%=mm.getId()%></td>
-                            <td><%=mm.getReference()%></td>
-                            <td><%=mm.getPrix()%></td>
-                            <td><%=mm.getMarque().getLibelle()%></td>
-                            <td><%=mm.getDateAchat()%></td>
-                            <td><a class="bndelete" href="MachineController?op=delete&id=<%=mm.getId()%>">Supprimer</a></td>
-                            <td><a class="bnupdate" href="">Modifier</a></td>
-                        </tr>
-                        <%}%>
+                    <tbody  id='body'>
+                        
+                       
                     </tbody>
                 </table>
 
