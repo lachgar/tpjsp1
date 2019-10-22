@@ -5,25 +5,25 @@
  */
 package ma.school.controller;
 
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
+import java.util.Collection;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import ma.school.beans.Etudiant;
-import ma.school.service.EtudiantService;
+import ma.school.beans.Machine;
+import ma.school.service.MarqueService;
 
 /**
  *
- * @author leblond
+ * @author a
  */
-@WebServlet(name = "EtudiantController", urlPatterns = {"/EtudiantController"})
-public class EtudiantController extends HttpServlet {
-
-    String op = null;
+@WebServlet(name = "MachineByMarqueController", urlPatterns = {"/MachineByMarqueController"})
+public class MachineByMarqueController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,35 +34,17 @@ public class EtudiantController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-
-    @Override
-    public void init()
-            throws ServletException {
-        super.init(); //To change body of generated methods, choose Tools | Templates.
-        op = null;
-    }
-
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        op = request.getParameter("op");
-        EtudiantService es = new EtudiantService();
-
-        if (op.equals("Envoyer")) {
-            String nom = request.getParameter("nom");
-            String prenom = request.getParameter("prenom");
-            String ville = request.getParameter("ville");
-            String date = request.getParameter("dateNaissance");
-            System.out.println(date);
-            Date dateNaissance = new Date(date.replace("-", "/"));
-            String sexe = request.getParameter("sexe");
-            es.create(new Etudiant(nom, prenom, ville, dateNaissance, sexe));
-            response.sendRedirect("etudiantForm.jsp");
-        } else if (op.equals("delete")) {
-            int id = Integer.parseInt(request.getParameter("id"));
-            es.delete(es.findById(id));
-            response.sendRedirect("etudiantForm.jsp");
-        } else if (op.equals("update")) {
-
-        }
+    MarqueService ms = new MarqueService();
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("application/json;charset=UTF-8");
+       
+        List<Machine> l = ms.findById(5).getMachines();
+        
+        String s = new Gson().toJson(l);
+        response.getWriter().write(s);
+    //Type type = new TypeToken<Collection<Machine>>(){}.getType(); 
+      //  Collection<Machine> etudiants = new Gson().fromJson(response, type);        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -7,8 +7,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <ul>
     <li><a class="active" href="#home">Home</a></li>
-    <li><a href="etudiant.php">Gestion des etudiants</a></li>
-    <li><a href="marque.php">Gestion des marques</a></li>
-    <li><a href="machines.php">Gestion des machines</a></li>
+    <li><a href="etudiantForm.jsp">Gestion des etudiants</a></li>
+    <li><a href="marqueForm.jsp">Gestion des marques</a></li>
+    <li><a href="machineForm.jsp">Gestion des machines</a></li>
+    <li><a href="machineByMarqueForm.jsp">Machines par marque</a></li>
 
 </ul>

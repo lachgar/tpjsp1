@@ -1,3 +1,7 @@
+<%@page import="ma.school.beans.Machine"%>
+<%@page import="ma.school.service.MachineService"%>
+<%@page import="ma.school.beans.Marque"%>
+<%@page import="ma.school.service.MarqueService"%>
 <%@page import="java.util.Date"%>
 <%@page import="ma.school.beans.Etudiant"%>
 <%@page import="ma.school.service.EtudiantService"%>
@@ -8,7 +12,6 @@
         <script src="script/script.js" type="text/javascript"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <script src="script/jsonExemple.js" type="text/javascript"></script>
         <link href="style/css.css" rel="stylesheet" type="text/css"/>
         <link href="style/csslocal.css" rel="stylesheet" type="text/css"/>
     </head>
@@ -16,38 +19,36 @@
         <%@include file="template/header.jsp" %>
         <%@include file="template/menu.jsp" %>
         <div class="content">
-            <form method="GET" action="EtudiantController">
+            <form method="GET" action="MachineController">
                 <fieldset>
-                    <legend>Informations Etudiant</legend>
+                    <legend>Informations Machine</legend>
                     <table border="0">
                         <tr>
-                            <td>Nom</td>
-                            <td><input id="nom" type="text" name="nom" value=""  required=""/></td>
+                            <td>Reference</td>
+                            <td><input id="ref" type="text" name="ref" value=""  required=""/></td>
                         </tr>
                         <tr>
-                            <td>Prenom</td>
-                            <td><input id="prenom" type="text" name="prenom" value="" required="" /></td>
+                            <td>Prix</td>
+                            <td><input id="prix" type="text" name="prix" value="" required="" /></td>
                         </tr>
                         <tr>
-                            <td>Ville</td>
+                            <td>Marque</td>
                             <td>
-                                <select id="ville" name="ville">
-                                    <option value="Rabat">Rabat</option>
-                                    <option value="Fes">Fes</option>
-                                    <option value="Marakech">Marrakech</option>
-
+                                <select id="marque" name="marque">
+                                    <%
+                                        MarqueService ms = new MarqueService();
+                                        for(Marque m : ms.findAll()){
+                                    %>
+                                    <option value="<%=m.getId()%>"><%=m.getLibelle()%></option>
+                                    <%}%>
                                 </select>
                             </td>
                         </tr>
                         <tr>
-                            <td>Date de naissance</td>
-                            <td><input id="date" type="date" name="dateNaissance" value="" required="" /></td>
+                            <td>Date Achat</td>
+                            <td><input id="date" type="date" name="dateAchat" value="" required="" /></td>
                         </tr>
-                        <tr>
-                            <td>Sexe</td>
-                            <td>M<input id="m" type="radio" name="sexe" value="homme" />
-                                F<input id="f" type="radio" name="sexe" value="femme" checked="checked" /></td>
-                        </tr>
+                        
                         <tr>
                             <td></td>
                             <td>
@@ -58,37 +59,36 @@
                 </fieldset>
             </form>
             <%
-                EtudiantService es = new EtudiantService();
+                MachineService mms = new MachineService();
             %>
             <fieldset>
-                <legend>Liste des étudiants</legend>
+                <legend>Liste des Machines</legend>
 
                 <table border="1" class="tab">
                     <thead>
                         <tr>
                             <th>Id</th>
-                            <th>Nom <br>
+                            <th>Reference <br>
                                 <input id="f" type="text" name="f" value="" /></th>
-                            <th>Prenom</th>
-                            <th>Ville</th>
-                            <th>Date de naissance</th>
-                            <th>Sexe</th>
+                            <th>Prix</th>
+                            <th>Marque</th>
+                            <th>Date d'achat</th>
+                       
                             <th>Supprimer</th>
                             <th>Modifier</th>
                         </tr>
                     </thead>
                     <tbody>
                         <%
-                            for (Etudiant e : es.findAll()) {
+                            for (Machine mm : mms.findAll()) {
                         %>
                         <tr>
-                            <td><%=e.getId()%></td>
-                            <td><%=e.getNom()%></td>
-                            <td><%=e.getPrenom()%></td>
-                            <td><%=e.getVille()%></td>
-                            <td><%=e.getDateNaissance()%></td>
-                            <td><%=e.getSexe()%></td>
-                            <td><a class="bndelete" href="EtudiantController?op=delete&id=<%=e.getId()%>">Supprimer</a></td>
+                            <td><%=mm.getId()%></td>
+                            <td><%=mm.getReference()%></td>
+                            <td><%=mm.getPrix()%></td>
+                            <td><%=mm.getMarque().getLibelle()%></td>
+                            <td><%=mm.getDateAchat()%></td>
+                            <td><a class="bndelete" href="MachineController?op=delete&id=<%=mm.getId()%>">Supprimer</a></td>
                             <td><a class="bnupdate" href="">Modifier</a></td>
                         </tr>
                         <%}%>

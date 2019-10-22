@@ -8,6 +8,7 @@
         <script src="script/script.js" type="text/javascript"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <script src="script/jsonExemple.js" type="text/javascript"></script>
         <link href="style/css.css" rel="stylesheet" type="text/css"/>
         <link href="style/csslocal.css" rel="stylesheet" type="text/css"/>
     </head>

@@ -7,24 +7,20 @@ package ma.school.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import ma.school.beans.Etudiant;
-import ma.school.service.EtudiantService;
+import ma.school.beans.Marque;
+import ma.school.service.MarqueService;
 
 /**
  *
- * @author leblond
+ * @author a
  */
-@WebServlet(name = "EtudiantController", urlPatterns = {"/EtudiantController"})
-public class EtudiantController extends HttpServlet {
+public class MarqueController extends HttpServlet {
 
-    String op = null;
-
+    private MarqueService ms = new MarqueService();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -34,35 +30,21 @@ public class EtudiantController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+       String op = request.getParameter("op");
+       if(op.equals("Envoyer")){
+           String code = request.getParameter("code");
+           String libelle = request.getParameter("libelle");
+           ms.create(new Marque(code, libelle));
+           response.sendRedirect("marqueForm.jsp");
+       }else if(op.equalsIgnoreCase("delete")){
+           int id = Integer.parseInt(request.getParameter("id"));
+           ms.delete(ms.findById(id));
+           response.sendRedirect("marqueForm.jsp");
 
-    @Override
-    public void init()
-            throws ServletException {
-        super.init(); //To change body of generated methods, choose Tools | Templates.
-        op = null;
-    }
-
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        op = request.getParameter("op");
-        EtudiantService es = new EtudiantService();
-
-        if (op.equals("Envoyer")) {
-            String nom = request.getParameter("nom");
-            String prenom = request.getParameter("prenom");
-            String ville = request.getParameter("ville");
-            String date = request.getParameter("dateNaissance");
-            System.out.println(date);
-            Date dateNaissance = new Date(date.replace("-", "/"));
-            String sexe = request.getParameter("sexe");
-            es.create(new Etudiant(nom, prenom, ville, dateNaissance, sexe));
-            response.sendRedirect("etudiantForm.jsp");
-        } else if (op.equals("delete")) {
-            int id = Integer.parseInt(request.getParameter("id"));
-            es.delete(es.findById(id));
-            response.sendRedirect("etudiantForm.jsp");
-        } else if (op.equals("update")) {
-
-        }
+       }
+               
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

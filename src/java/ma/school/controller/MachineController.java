@@ -13,18 +13,19 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import ma.school.beans.Etudiant;
-import ma.school.service.EtudiantService;
+import ma.school.beans.Machine;
+import ma.school.beans.Marque;
+import ma.school.service.MachineService;
+import ma.school.service.MarqueService;
 
 /**
  *
- * @author leblond
+ * @author a
  */
-@WebServlet(name = "EtudiantController", urlPatterns = {"/EtudiantController"})
-public class EtudiantController extends HttpServlet {
-
-    String op = null;
-
+@WebServlet(name = "MachineController", urlPatterns = {"/MachineController"})
+public class MachineController extends HttpServlet {
+    MarqueService ms = new MarqueService();
+    MachineService mms = new MachineService();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -34,34 +35,19 @@ public class EtudiantController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-
-    @Override
-    public void init()
-            throws ServletException {
-        super.init(); //To change body of generated methods, choose Tools | Templates.
-        op = null;
-    }
-
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        op = request.getParameter("op");
-        EtudiantService es = new EtudiantService();
-
-        if (op.equals("Envoyer")) {
-            String nom = request.getParameter("nom");
-            String prenom = request.getParameter("prenom");
-            String ville = request.getParameter("ville");
-            String date = request.getParameter("dateNaissance");
-            System.out.println(date);
-            Date dateNaissance = new Date(date.replace("-", "/"));
-            String sexe = request.getParameter("sexe");
-            es.create(new Etudiant(nom, prenom, ville, dateNaissance, sexe));
-            response.sendRedirect("etudiantForm.jsp");
-        } else if (op.equals("delete")) {
-            int id = Integer.parseInt(request.getParameter("id"));
-            es.delete(es.findById(id));
-            response.sendRedirect("etudiantForm.jsp");
-        } else if (op.equals("update")) {
-
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String op = request.getParameter("op");
+        if(op.equalsIgnoreCase("envoyer")){
+            String ref = request.getParameter("ref");
+            double prix = Double.parseDouble(request.getParameter("prix"));
+            Date dateAchat = new Date(request.getParameter("dateAchat").replace("-", "/"));
+            Marque marque = ms.findById(Integer.parseInt(request.getParameter("marque")));
+            mms.create(new Machine(ref, dateAchat, prix, marque));
+            response.sendRedirect("machineForm.jsp");
+        }else if(op.equalsIgnoreCase("delete")){
+            mms.delete(mms.findById(Integer.parseInt(request.getParameter("id"))));
+            response.sendRedirect("machineForm.jsp");
         }
     }
 
